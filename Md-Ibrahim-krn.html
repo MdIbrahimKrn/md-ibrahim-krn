@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Single Page Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #0078d7;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        section {
+            padding: .5rem;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .contact {
+            text-align: center;
+        }
+        .contact a {
+            color: #0078d7;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .websites, .products {
+            display: grid;
+            gap: .5rem;
+        }
+        .websites{
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));     
+        }
+        .products {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        .website, .product {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .website:hover, .product:hover {
+            transform: scale(1.05);
+        }
+        .website iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            display: none;
+        }
+        .website button {
+            margin-top: 10px;
+            padding: 0.5rem 1rem;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .website button:hover {
+            background-color: #005bb5;
+        }
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup iframe {
+            width: 80%;
+            height: 60%;
+        }
+        .popup button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #f00;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ধন্যবাদ বিশ্বাস নিয়ে আমাদের সাথে থাকার জন্য।</h1>
+</header>
+
+<section class="contact">
+    <h2>আমার সাথে যোগাযোগ</h2>
+    <p>হোয়াটসঅ্যাপ: <a href="https://wa.me/60138584103">+60138584103</a></p>
+    <p>টিকটক: <a href="https://www.tiktok.com/@md.ibrahim.krn">@md.ibrahim.com</a></p>
+    <p>ইউটিউব: <a href="https://youtube.com/@mdibrahimkrn">@mdibrahimkrn</a></p>
+    
+             
+</section>
+
+<section>
+    <h2>প্রয়োজনীয় লিংক সমূহ</h2>
+    <div class="websites" id="websites-container"></div>
+</section>
+
+<section>
+    <h2>আপনার স্বপ্নের পণ্য</h2>
+    <div class="products" id="products-container"></div>
+</section>
+
+<div class="popup" id="popup">
+    <button onclick="closePopup()">Close</button>
+    <iframe id="popupVideo" src=""></iframe>
+</div>
+
+<script>
+    // Data for websites
+    const websites = [
+        {
+            name: "পাসপোর্ট অনলাইন হয়েছে কিনা দেখুন",
+            url: "https://appointment.bdhckl.gov.bd/reissue",
+            video: "https://www.youtube.com/embed/example1"
+        },
+        {
+            name: "পাসপোর্ট হাই কমিশনে এসেছে কিনা দেখুন",
+            url: "https://appointment.bdhckl.gov.bd/",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "MRP পাসপোর্ট স্ট্যাটাস বা বাংলাদেশে কোন পর্যায় আছে দেখুন",
+            url: "passport.gov.bd/onlinestatus.aspx",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "ই পাসপোর্টের স্ট্যাটাস বা বাংলাদেশে কোন পর্যায় আছে দেখুন",
+            url: "https://epassport.gov.bd/authorization/application-status",
+            video: "https://www.youtube.com/embed/example2"
+        }
+        // Add more websites here
+    ];
+
+    // Data for products
+    const products = [
+        {
+            name: "শীগ্রই আসবে...",
+            image: "https://via.placeholder.com/150",
+            link: "https://example.com/product1"
+        }
+        
+        // Add more products here
+    ];
+
+    // Generate website sections dynamically
+    const websitesContainer = document.getElementById("websites-container");
+    websites.forEach((website, index) => {
+        const websiteElement = document.createElement("div");
+        websiteElement.classList.add("website");
+        websiteElement.innerHTML = `
+            <h3>${website.name}</h3>
+            <iframe src="${website.url}"></iframe>
+            <button onclick="toggleWebsite(this)">চেক করুন</button>
+            <button onclick="showVideo('${website.video}')">না বুজলে ভিডিও দেখুন</button>
+        `;
+        websitesContainer.appendChild(websiteElement);
+    });
+
+    // Generate product sections dynamically
+    const productsContainer = document.getElementById("products-container");
+    products.forEach(product => {
+        const productElement = document.createElement("div");
+        productElement.classList.add("product");
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <p>${product.name}</p>
+            <a href="${product.link}" target="_blank">View Product</a>
+        `;
+        productsContainer.appendChild(productElement);
+    });
+
+    // Toggle website visibility
+    function toggleWebsite(button) {
+        const iframe = button.previousElementSibling;
+        iframe.style.display = iframe.style.display === 'block' ? 'none' : 'block';
+        button.textContent = iframe.style.display === 'block' ? 'বন্ধ করুন' : 'চেক করুন';
+    }
+
+    // Show video popup
+    function showVideo(videoUrl) {
+        const popup = document.getElementById('popup');
+        const popupVideo = document.getElementById('popupVideo');
+        popupVideo.src = videoUrl;
+        popup.style.display = 'flex';
+    }
+
+    // Close video popup
+    function closePopup() {
+        const popup = document.getElementById('popup');
+        const popupVideo = document.getElementById('popupVideo');
+        popup.style.display = 'none';
+        popupVideo.src = '';
+    }
+</script>
+
+</body>
+</html>
