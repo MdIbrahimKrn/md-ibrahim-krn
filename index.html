@@ -36,6 +36,7 @@
         .websites, .products {
             display: grid;
             gap: .5rem;
+            overflow: hidden;
         }
         .websites{
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));     
@@ -144,12 +145,37 @@
         },
         {
             name: "MRP পাসপোর্ট স্ট্যাটাস বা বাংলাদেশে কোন পর্যায় আছে দেখুন",
-            url: "passport.gov.bd/onlinestatus.aspx",
+            url: "http://passport.gov.bd/onlinestatus.aspx",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "জন্মনিবন্ধন অনলাইন চেক বা ডাউনলোড করুন",
+            url: "https://everify.bdris.gov.bd",
             video: "https://www.youtube.com/embed/example2"
         },
         {
             name: "ই পাসপোর্টের স্ট্যাটাস বা বাংলাদেশে কোন পর্যায় আছে দেখুন",
             url: "https://epassport.gov.bd/authorization/application-status",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "বারকোড পুসলাজুতে চেক করুন",
+            url: "https://www.pos.com.my/",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "মালয়েশিয়া ভিসা (ই-পাস) অরিজিনাল কিনা চেক করুন",
+            url: "https://imigresen-online.imi.gov.my/eservices/epass",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "মালয়েশিয়া মেডিকেল ফিট হয়েছেন কিনা চেক",
+            url: "https://eservices.imi.gov.my/myimms/FomemaStatus",
+            video: "https://www.youtube.com/embed/example2"
+        },
+        {
+            name: "মালয়েশিয়ায় নতুন ভিসা লেগেছে কিনা চেক",
+            url: "https://eservices.imi.gov.my/myimms/VPAStsInq?MAD_DOC_NO=&MAD_DOC_CTRY_CD=BGD&search=CARIAN&lang=en",
             video: "https://www.youtube.com/embed/example2"
         }
         // Add more websites here
@@ -172,7 +198,8 @@
         const websiteElement = document.createElement("div");
         websiteElement.classList.add("website");
         websiteElement.innerHTML = `
-            <h3>${website.name}</h3>
+            <h3>${website.name}</h3> 
+            <p><small>${website.url}</small></p>     
             <iframe src="${website.url}"></iframe>
             <button onclick="toggleWebsite(this)">চেক করুন</button>
             <button onclick="showVideo('${website.video}')">না বুজলে ভিডিও দেখুন</button>
